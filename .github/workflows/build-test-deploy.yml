@@ -41,7 +41,7 @@ jobs:
   build-test-deploy:
     needs: build-and-test
     if: github.event_name == 'push'
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
