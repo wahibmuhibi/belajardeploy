@@ -70,10 +70,11 @@ jobs:
           # Stop and remove any existing container
           pwd
           ls
-          cd downloads
+          docker stop webapp || true
+          docker rm webapp || true
 
           # Build the Docker image on the EC2 instance
           sudo docker build -t ec2-flask:v1.0 -f Dockerfile .
 
           # Run the newly built Docker image
-          sudo docker run -d -p 80:5000 ec2-flask:v1.0
+          sudo docker run -d -p 80:5000 --name webapp ec2-flask:v1.0
