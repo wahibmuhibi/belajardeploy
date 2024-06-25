@@ -68,6 +68,7 @@ jobs:
         source: "tests templates static __pycache__"
         target: "/home/ec2-user/downloads"
 
+
     - name: Connect to EC2 and deploy
       uses: appleboy/ssh-action@master
       with:
