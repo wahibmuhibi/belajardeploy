@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-   Continuous_Integration:
+   build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,8 +38,8 @@ jobs:
       run: |
         pytest
 
-   Continuous_Development:
-    needs: CI  # Menyebutkan dependency job sebelumnya
+   deploy:
+    needs: build-test 
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
