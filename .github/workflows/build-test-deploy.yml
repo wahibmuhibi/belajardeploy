@@ -63,16 +63,12 @@ jobs:
     - name: Connect to EC2 and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_PRIVATE_KEY }}
-        script: |
-          # Stop and remove any existing container
-          sudo docker stop $(docker ps -a -q) || true
-          sudo docker rm $(docker ps -a -q) || true
-
-          # Build the Docker image on the EC2 instance
-          sudo docker build -t ec2-flask:v1.0 -f Dockerfile .
+       host: ${{ secrets.EC2_HOST }}
+       username: ${{ secrets.EC2_USERNAME }}
+       key: ${{ secrets.EC2_PRIVATE_KEY }}
+       script: |
+         scp -i ${{ secrets.EC2_PRIVATE_KEY }} -r . ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/downloads
+         ssh -i ${{ secrets.EC2_PRIVATE_KEY }} ec2-user@${{ secrets.EC2_HOST }} 'bash -s' < deploy_script.sh
 
           # Run the newly built Docker image
           sudo docker run -d -p 80:5000 --name ec2-flask:v1.0
