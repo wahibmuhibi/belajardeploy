@@ -68,6 +68,8 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
           # Stop and remove any existing container
+          pwd
+          ls
           docker stop webapp || true
           docker rm webapp || true
 
